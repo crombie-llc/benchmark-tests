@@ -21,7 +21,10 @@ jobs:
         id: pragent
         uses: Codium-ai/pr-agent@main
         env:
+          OPENAI_KEY: ${{ secrets.OPENAI_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           github_action.auto_review: "true"
           github_action.auto_describe: "true"
           github_action.auto_improve: "false"
+          config.model: "gpt-4o-mini"
+          config.fallback_models: "gpt-4o-mini"
