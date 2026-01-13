@@ -1,0 +1,17 @@
+{
+  "caseId": "TS-SEC-XSS-001",
+  "language": "typescript",
+  "expectedFindings": [
+    {
+      "type": "security",
+      "severity": "high",
+      "location": {
+        "file": "src/components/Comment.tsx",
+        "startLine": 1
+      },
+      "description": "Cross-Site Scripting via dangerouslySetInnerHTML",
+      "cwe": "CWE-79"
+    }
+  ],
+  "generatedAt": "2026-01-12T12:28:09.376Z"
+}

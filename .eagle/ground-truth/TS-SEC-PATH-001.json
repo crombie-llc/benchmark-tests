@@ -1,0 +1,17 @@
+{
+  "caseId": "TS-SEC-PATH-001",
+  "language": "typescript",
+  "expectedFindings": [
+    {
+      "type": "security",
+      "severity": "high",
+      "location": {
+        "file": "src/controllers/file.controller.ts",
+        "startLine": 1
+      },
+      "description": "Path Traversal vulnerability allows reading arbitrary files",
+      "cwe": "CWE-22"
+    }
+  ],
+  "generatedAt": "2026-01-12T12:28:09.375Z"
+}

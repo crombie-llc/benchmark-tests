@@ -1,0 +1,17 @@
+{
+  "caseId": "CPP-IMPROPER-NEUTRALIZATION-OF-MULTIPLE-LEADING-SPECIAL-ELEMENTS-JUL-015",
+  "language": "cpp",
+  "expectedFindings": [
+    {
+      "type": "security",
+      "severity": "medium",
+      "location": {
+        "file": "CWE401_Memory_Leak__new_wchar_t_13.cpp",
+        "startLine": 1
+      },
+      "description": "Improper neutralization of leading special elements detected.",
+      "cwe": "CWE-161"
+    }
+  ],
+  "generatedAt": "2026-01-12T12:28:09.360Z"
+}

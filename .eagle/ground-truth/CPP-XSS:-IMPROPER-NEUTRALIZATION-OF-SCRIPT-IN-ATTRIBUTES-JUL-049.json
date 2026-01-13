@@ -1,0 +1,17 @@
+{
+  "caseId": "CPP-XSS:-IMPROPER-NEUTRALIZATION-OF-SCRIPT-IN-ATTRIBUTES-JUL-049",
+  "language": "cpp",
+  "expectedFindings": [
+    {
+      "type": "security",
+      "severity": "high",
+      "location": {
+        "file": "CWE190_Integer_Overflow__int_listen_socket_postinc_45.c",
+        "startLine": 1
+      },
+      "description": "XSS vulnerability in HTML attributes detected.",
+      "cwe": "CWE-82"
+    }
+  ],
+  "generatedAt": "2026-01-12T12:28:09.356Z"
+}

@@ -1,0 +1,17 @@
+{
+  "caseId": "JS-SEC-CREDS-001",
+  "language": "javascript",
+  "expectedFindings": [
+    {
+      "type": "security",
+      "severity": "critical",
+      "location": {
+        "file": "config/database.js",
+        "startLine": 1
+      },
+      "description": "Hardcoded credentials in source code",
+      "cwe": "CWE-798"
+    }
+  ],
+  "generatedAt": "2026-01-12T12:28:09.364Z"
+}

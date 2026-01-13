@@ -1,0 +1,17 @@
+{
+  "caseId": "PY-PERF-PANDAS-001",
+  "language": "python",
+  "expectedFindings": [
+    {
+      "type": "code_smell",
+      "severity": "medium",
+      "location": {
+        "file": "analysis/data_proc.py",
+        "startLine": 1
+      },
+      "description": "Inefficient iteration over DataFrame rows. Vectorized operations are significantly faster.",
+      "cwe": "CWE-Unknown"
+    }
+  ],
+  "generatedAt": "2026-01-12T12:28:09.369Z"
+}

@@ -1,0 +1,17 @@
+{
+  "caseId": "CPP-IMPROPER-ENCODING-OR-ESCAPING-OF-OUTPUT-JUL-085",
+  "language": "cpp",
+  "expectedFindings": [
+    {
+      "type": "security",
+      "severity": "medium",
+      "location": {
+        "file": "CWE36_Absolute_Path_Traversal__wchar_t_file_open_07.cpp",
+        "startLine": 1
+      },
+      "description": "Improper output encoding detected.",
+      "cwe": "CWE-116"
+    }
+  ],
+  "generatedAt": "2026-01-12T12:28:09.358Z"
+}

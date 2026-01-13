@@ -1,0 +1,17 @@
+{
+  "caseId": "CPP-MEM-LEAK-001",
+  "language": "cpp",
+  "expectedFindings": [
+    {
+      "type": "code_smell",
+      "severity": "critical",
+      "location": {
+        "file": "src/engine/TextureLoader.cpp",
+        "startLine": 1
+      },
+      "description": "Memory leak detected. 'tex' is allocated but not deleted before returning nullptr.",
+      "cwe": "CWE-401"
+    }
+  ],
+  "generatedAt": "2026-01-12T12:28:09.361Z"
+}

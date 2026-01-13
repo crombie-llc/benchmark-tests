@@ -1,0 +1,17 @@
+{
+  "caseId": "JS-SEC-XXE-001",
+  "language": "javascript",
+  "expectedFindings": [
+    {
+      "type": "security",
+      "severity": "high",
+      "location": {
+        "file": "routes/import.js",
+        "startLine": 1
+      },
+      "description": "XML External Entity (XXE) vulnerability",
+      "cwe": "CWE-611"
+    }
+  ],
+  "generatedAt": "2026-01-12T12:28:09.368Z"
+}

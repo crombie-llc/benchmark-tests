@@ -1,0 +1,17 @@
+{
+  "caseId": "CPP-UNCONTROLLED-FORMAT-STRING-JUL-061",
+  "language": "cpp",
+  "expectedFindings": [
+    {
+      "type": "security",
+      "severity": "critical",
+      "location": {
+        "file": "CWE122_Heap_Based_Buffer_Overflow__cpp_CWE805_wchar_t_memmove_73a.cpp",
+        "startLine": 1
+      },
+      "description": "Uncontrolled format string vulnerability detected.",
+      "cwe": "CWE-134"
+    }
+  ],
+  "generatedAt": "2026-01-12T12:28:09.361Z"
+}

@@ -1,0 +1,17 @@
+{
+  "caseId": "CPP-BUFFER-OVERFLOW-JUL-030",
+  "language": "cpp",
+  "expectedFindings": [
+    {
+      "type": "security",
+      "severity": "critical",
+      "location": {
+        "file": "CWE134_Uncontrolled_Format_String__wchar_t_environment_fprintf_05.c",
+        "startLine": 1
+      },
+      "description": "Buffer overflow detected. Improper restriction of operations within memory buffer bounds.",
+      "cwe": "CWE-134"
+    }
+  ],
+  "generatedAt": "2026-01-12T12:28:09.353Z"
+}

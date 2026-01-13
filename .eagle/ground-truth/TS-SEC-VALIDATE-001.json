@@ -1,0 +1,17 @@
+{
+  "caseId": "TS-SEC-VALIDATE-001",
+  "language": "typescript",
+  "expectedFindings": [
+    {
+      "type": "security",
+      "severity": "medium",
+      "location": {
+        "file": "src/dto/create-user.dto.ts",
+        "startLine": 1
+      },
+      "description": "Missing input validation on user-controlled data",
+      "cwe": "CWE-20"
+    }
+  ],
+  "generatedAt": "2026-01-12T12:28:09.376Z"
+}

@@ -1,0 +1,17 @@
+{
+  "caseId": "TS-SEC-CSRF-001",
+  "language": "typescript",
+  "expectedFindings": [
+    {
+      "type": "security",
+      "severity": "high",
+      "location": {
+        "file": "src/controllers/account.controller.ts",
+        "startLine": 1
+      },
+      "description": "Missing CSRF protection on state-changing operation",
+      "cwe": "CWE-352"
+    }
+  ],
+  "generatedAt": "2026-01-12T12:28:09.374Z"
+}

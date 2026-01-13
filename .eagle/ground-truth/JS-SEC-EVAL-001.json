@@ -1,0 +1,17 @@
+{
+  "caseId": "JS-SEC-EVAL-001",
+  "language": "javascript",
+  "expectedFindings": [
+    {
+      "type": "security",
+      "severity": "critical",
+      "location": {
+        "file": "lib/calculator.js",
+        "startLine": 1
+      },
+      "description": "Arbitrary code execution through eval()",
+      "cwe": "CWE-94"
+    }
+  ],
+  "generatedAt": "2026-01-12T12:28:09.365Z"
+}

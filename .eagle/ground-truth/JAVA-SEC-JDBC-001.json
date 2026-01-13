@@ -1,0 +1,17 @@
+{
+  "caseId": "JAVA-SEC-JDBC-001",
+  "language": "java",
+  "expectedFindings": [
+    {
+      "type": "security",
+      "severity": "critical",
+      "location": {
+        "file": "src/main/java/com/example/Dao.java",
+        "startLine": 1
+      },
+      "description": "SQL Injection vulnerability. User input concatenated directly into SQL query string.",
+      "cwe": "CWE-89"
+    }
+  ],
+  "generatedAt": "2026-01-12T12:28:09.363Z"
+}

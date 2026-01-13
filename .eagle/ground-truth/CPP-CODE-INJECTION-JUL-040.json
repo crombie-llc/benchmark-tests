@@ -1,0 +1,17 @@
+{
+  "caseId": "CPP-CODE-INJECTION-JUL-040",
+  "language": "cpp",
+  "expectedFindings": [
+    {
+      "type": "security",
+      "severity": "critical",
+      "location": {
+        "file": "CWE191_Integer_Underflow__int_fgets_postdec_11.c",
+        "startLine": 1
+      },
+      "description": "Code injection vulnerability detected.",
+      "cwe": "CWE-95"
+    }
+  ],
+  "generatedAt": "2026-01-12T12:28:09.354Z"
+}

@@ -1,0 +1,17 @@
+{
+  "caseId": "JAVA-ERR-CATCH-001",
+  "language": "java",
+  "expectedFindings": [
+    {
+      "type": "code_smell",
+      "severity": "high",
+      "location": {
+        "file": "src/main/java/com/example/Service.java",
+        "startLine": 1
+      },
+      "description": "Empty catch block silently swallowing generic Exception. This hides errors and makes debugging extremely difficult.",
+      "cwe": "CWE-Unknown"
+    }
+  ],
+  "generatedAt": "2026-01-12T12:28:09.363Z"
+}

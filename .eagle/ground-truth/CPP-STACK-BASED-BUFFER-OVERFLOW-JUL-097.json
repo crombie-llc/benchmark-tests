@@ -1,0 +1,17 @@
+{
+  "caseId": "CPP-STACK-BASED-BUFFER-OVERFLOW-JUL-097",
+  "language": "cpp",
+  "expectedFindings": [
+    {
+      "type": "security",
+      "severity": "critical",
+      "location": {
+        "file": "CWE667_Improper_Locking__basic_05.c",
+        "startLine": 1
+      },
+      "description": "Stack-based buffer overflow detected.",
+      "cwe": "CWE-121"
+    }
+  ],
+  "generatedAt": "2026-01-12T12:28:09.356Z"
+}

@@ -1,0 +1,17 @@
+{
+  "caseId": "CS-ASYNC-VOID-001",
+  "language": "csharp",
+  "expectedFindings": [
+    {
+      "type": "bug",
+      "severity": "high",
+      "location": {
+        "file": "Controllers/UserController.cs",
+        "startLine": 1
+      },
+      "description": "Avoid 'async void' methods. Use 'async Task' to allow proper exception handling and awaiting.",
+      "cwe": "CWE-Unknown"
+    }
+  ],
+  "generatedAt": "2026-01-12T12:28:09.362Z"
+}

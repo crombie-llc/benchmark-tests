@@ -1,0 +1,257 @@
+# bitbucket-pipelines.yml for benchmark-tests repository
+# Copy this file to the root of your benchmark-tests repository in Bitbucket
+
+clone:
+  depth: full
+
+options:
+  max-time: 20
+
+definitions:
+  steps:
+    - step: &index-repository
+        name: Index Repository with Eagle AI
+        image: alpine:latest
+        max-time: 30
+        script:
+          - apk add --no-cache jq curl bash
+
+          # Extract repository information
+          - REPO_URL="https://bitbucket.org/${BITBUCKET_WORKSPACE}/${BITBUCKET_REPO_SLUG}"
+          - BRANCH_NAME="${INDEX_BRANCH:-main}"
+          - REPO_PROVIDER="bitbucket"
+
+          - |
+            echo "========================================="
+            echo "Eagle AI - Repository Indexer"
+            echo "========================================="
+            echo ""
+            echo "Repository Information:"
+            echo "  URL: ${REPO_URL}"
+            echo "  Branch: ${BRANCH_NAME}"
+            echo "  Provider: ${REPO_PROVIDER}"
+            echo ""
+
+          # Validate environment variables
+          - |
+            if [[ -z "${API_URL_INDEXER:-}" ]]; then
+              echo "ERROR: API_URL_INDEXER variable not configured"
+              echo "Go to: Repository settings → Pipelines → Repository variables"
+              echo "Add: API_URL_INDEXER = https://your-api-gateway.amazonaws.com/index"
+              exit 1
+            fi
+
+            if [[ -z "${EAGLE_TOKEN:-}" ]]; then
+              echo "ERROR: EAGLE_TOKEN variable not configured"
+              echo "Go to: Repository settings → Pipelines → Repository variables (mark as Secured)"
+              echo "Add: EAGLE_TOKEN = your-eagle-ai-token"
+              exit 1
+            fi
+
+            if [[ -z "${APPLICATION_TOKEN:-}" ]]; then
+              echo "ERROR: APPLICATION_TOKEN variable not configured"
+              echo "Go to: Repository settings → Pipelines → Repository variables (mark as Secured)"
+              echo "Add: APPLICATION_TOKEN = your-bitbucket-app-password"
+              exit 1
+            fi
+
+            echo " All required variables are configured"
+
+          # Prepare and send request
+          - |
+            echo ""
+            echo "Configuration:"
+            echo "  API URL: ${API_URL_INDEXER}"
+            echo "  Repo URL: ${REPO_URL}"
+            echo "  Branch: ${BRANCH_NAME}"
+            echo "  Provider: ${REPO_PROVIDER}"
+            echo ""
+
+            # Prepare request body
+            BODY=$(jq -n \
+              --arg repoUrl "${REPO_URL}" \
+              --arg branchName "${BRANCH_NAME}" \
+              --arg repoProvider "${REPO_PROVIDER}" \
+              '{
+                repoUrl: $repoUrl,
+                branchName: $branchName,
+                repoProvider: $repoProvider
+              }')
+
+            echo "Request Body:"
+            echo "$BODY" | jq .
+            echo ""
+
+            # Make request
+            echo "Sending POST request..."
+            RESPONSE=$(curl -X POST "${API_URL_INDEXER}" \
+              -H "Content-Type: application/json" \
+              -H "X-Eagle-Token: ${EAGLE_TOKEN}" \
+              -H "X-Application-Token: ${APPLICATION_TOKEN}" \
+              -d "$BODY" \
+              -w "\nHTTP_STATUS:%{http_code}" \
+              -s)
+
+            # Extract status code and body
+            HTTP_STATUS=$(echo "$RESPONSE" | grep "HTTP_STATUS:" | cut -d: -f2)
+            BODY_RESPONSE=$(echo "$RESPONSE" | sed '/HTTP_STATUS:/d')
+
+            echo ""
+            echo "Response (Status: $HTTP_STATUS):"
+            echo "$BODY_RESPONSE" | jq . || echo "$BODY_RESPONSE"
+            echo ""
+
+            # Check status
+            if [[ "$HTTP_STATUS" -ge 200 && "$HTTP_STATUS" -lt 300 ]]; then
+              echo " SUCCESS - Repository indexing started"
+              
+              # Extract operation ID if present
+              OPERATION_ID=$(echo "$BODY_RESPONSE" | jq -r '.operationId // empty')
+              if [[ -n "$OPERATION_ID" ]]; then
+                echo ""
+                echo " Operation ID: $OPERATION_ID"
+                echo " Status: $(echo "$BODY_RESPONSE" | jq -r '.status // "unknown"')"
+              fi
+              
+              echo "========================================="
+              echo " Repository indexed successfully"
+              echo "========================================="
+              exit 0
+            else
+              echo " FAILED - HTTP Status: $HTTP_STATUS"
+              echo "$BODY_RESPONSE"
+              echo "========================================="
+              echo " Indexing failed"
+              echo "========================================="
+              exit 1
+            fi
+
+pipelines:
+  # Manual trigger for indexing
+  custom:
+    index-repo:
+      - step: *index-repository
+
+  # Auto-index on push to main branch
+  branches:
+    main:
+      - step: *index-repository
+
+  # PR reviews
+  pull-requests:
+    '**':
+      - step:
+          name: Eagle AI Code Review
+          image: node:20-bullseye
+          script:
+            - set -euo pipefail
+
+            - apt-get update && apt-get install -y git jq curl
+
+            # Extract PR creator info from Bitbucket API using APPLICATION_TOKEN
+            - |
+              PR_INFO=$(curl -s -H "Authorization: Bearer ${APPLICATION_TOKEN}" \
+                "https://api.bitbucket.org/2.0/repositories/${BITBUCKET_REPO_FULL_NAME}/pullrequests/${BITBUCKET_PR_ID}")
+              
+              AUTHOR_NAME=$(echo "$PR_INFO" | jq -r '.author.display_name // .author.nickname // "unknown"')
+              export AUTHOR_DISPLAY_NAME="${AUTHOR_NAME}"
+
+            - SRC_BRANCH="${BITBUCKET_BRANCH:-}"
+            - DST_BRANCH="${INDEX_BRANCH:-main}"
+            - PR_ID="${BITBUCKET_PR_ID:-}"
+            - COMMIT_HASH="${BITBUCKET_COMMIT:-}"
+
+            - |
+              if [[ -z "$SRC_BRANCH" || -z "$DST_BRANCH" ]]; then
+                echo "ERROR: Could not detect branches"
+                exit 1
+              fi
+
+            - git fetch --all
+            - git fetch origin "+refs/heads/*:refs/remotes/origin/*"
+            - git diff "origin/${DST_BRANCH}...HEAD" > pr.diff.txt
+
+            - DIFF_LINES=$(wc -l < pr.diff.txt)
+            - |
+              if [[ "${DIFF_LINES}" -eq 0 ]]; then
+                echo "No changes to analyze"
+                exit 0
+              fi
+
+            - |
+              if [[ -z "${API_URL:-}" || -z "${EAGLE_TOKEN:-}" || -z "${APPLICATION_TOKEN:-}" ]]; then
+                echo "ERROR: Missing required environment variables (API_URL, EAGLE_TOKEN, APPLICATION_TOKEN)"
+                exit 1
+              fi
+
+            - REPO_PROVIDER="${REPO_PROVIDER:-bitbucket}"
+            - REPO_FULL_NAME="${BITBUCKET_REPO_FULL_NAME:-}"
+            - REPO_URL="https://bitbucket.org/${REPO_FULL_NAME}"
+            - PR_URL="${REPO_URL}/pull-requests/${PR_ID}"
+
+            - |
+              # Build payload using jq with slurpfile to avoid "Argument list too long"
+              # First, convert diff to JSON string
+              jq -Rs . pr.diff.txt > diff.json
+
+              # Then build the complete payload
+              jq -n \
+                --arg repoProvider "${REPO_PROVIDER}" \
+                --arg repoUrl "${REPO_URL}" \
+                --arg prUrl "${PR_URL}" \
+                --slurpfile diffContent diff.json \
+                --arg branch "${SRC_BRANCH}" \
+                --arg commit "${COMMIT_HASH}" \
+                --argjson prNumber "${PR_ID}" \
+                --arg author "${AUTHOR_DISPLAY_NAME}" \
+                '{
+                  repoProvider: $repoProvider,
+                  repoUrl: $repoUrl,
+                  pullRequestUrl: $prUrl,
+                  diff: $diffContent[0],
+                  metadata: {
+                    branch: $branch,
+                    commit: $commit,
+                    prNumber: $prNumber,
+                    author: $author
+                  }
+                }' > payload.json
+
+            - |
+              MAX_RETRIES=3
+              RETRY_DELAY=5
+
+              for i in $(seq 1 $MAX_RETRIES); do
+                HTTP_CODE=$(curl --location --request POST "${API_URL}" \
+                  --max-time 60 \
+                  --connect-timeout 10 \
+                  --header 'Content-Type: application/json' \
+                  --header "X-Eagle-Token: ${EAGLE_TOKEN}" \
+                  --header "X-Application-Token: ${APPLICATION_TOKEN}" \
+                  --write-out "%{http_code}" \
+                  --silent \
+                  --output api.response.json \
+                  --data-binary @payload.json)
+
+                if [[ "$HTTP_CODE" -ge 200 && "$HTTP_CODE" -lt 300 ]]; then
+                  echo " Eagle AI analysis completed successfully"
+                  cat api.response.json
+                  exit 0
+                fi
+
+                echo "  Attempt $i failed (HTTP $HTTP_CODE)"
+                
+                if [[ $i -lt $MAX_RETRIES ]]; then
+                  echo "Retrying in ${RETRY_DELAY}s..."
+                  sleep $RETRY_DELAY
+                fi
+              done
+
+              echo " ERROR: Failed after $MAX_RETRIES attempts"
+              cat api.response.json
+              exit 1
+
+          artifacts:
+            - pr.diff.txt
+            - payload.json
+            - api.response.json

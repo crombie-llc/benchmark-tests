@@ -1,0 +1,17 @@
+{
+  "caseId": "JS-SEC-DESER-001",
+  "language": "javascript",
+  "expectedFindings": [
+    {
+      "type": "security",
+      "severity": "critical",
+      "location": {
+        "file": "middleware/session.js",
+        "startLine": 1
+      },
+      "description": "Insecure deserialization of untrusted data",
+      "cwe": "CWE-502"
+    }
+  ],
+  "generatedAt": "2026-01-12T12:28:09.365Z"
+}

@@ -1,0 +1,17 @@
+{
+  "caseId": "CPP-HEAP-BASED-BUFFER-OVERFLOW-JUL-076",
+  "language": "cpp",
+  "expectedFindings": [
+    {
+      "type": "security",
+      "severity": "critical",
+      "location": {
+        "file": "CWE121_Stack_Based_Buffer_Overflow__CWE806_wchar_t_alloca_ncat_72b.cpp",
+        "startLine": 1
+      },
+      "description": "Heap-based buffer overflow detected.",
+      "cwe": "CWE-122"
+    }
+  ],
+  "generatedAt": "2026-01-12T12:28:09.358Z"
+}

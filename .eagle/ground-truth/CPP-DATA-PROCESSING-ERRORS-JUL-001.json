@@ -1,0 +1,17 @@
+{
+  "caseId": "CPP-DATA-PROCESSING-ERRORS-JUL-001",
+  "language": "cpp",
+  "expectedFindings": [
+    {
+      "type": "bug",
+      "severity": "medium",
+      "location": {
+        "file": "CWE127_Buffer_Underread__CWE839_fgets_45.c",
+        "startLine": 1
+      },
+      "description": "Data processing errors detected.",
+      "cwe": "CWE-19"
+    }
+  ],
+  "generatedAt": "2026-01-12T12:28:09.355Z"
+}

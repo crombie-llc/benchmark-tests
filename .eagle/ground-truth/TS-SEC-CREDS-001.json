@@ -1,0 +1,17 @@
+{
+  "caseId": "TS-SEC-CREDS-001",
+  "language": "typescript",
+  "expectedFindings": [
+    {
+      "type": "security",
+      "severity": "critical",
+      "location": {
+        "file": "src/config/api.config.ts",
+        "startLine": 1
+      },
+      "description": "Hardcoded API keys and secrets in configuration",
+      "cwe": "CWE-798"
+    }
+  ],
+  "generatedAt": "2026-01-12T12:28:09.374Z"
+}

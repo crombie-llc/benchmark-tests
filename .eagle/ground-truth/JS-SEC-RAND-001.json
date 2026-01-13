@@ -1,0 +1,17 @@
+{
+  "caseId": "JS-SEC-RAND-001",
+  "language": "javascript",
+  "expectedFindings": [
+    {
+      "type": "security",
+      "severity": "high",
+      "location": {
+        "file": "lib/token.js",
+        "startLine": 1
+      },
+      "description": "Cryptographically weak random number generation",
+      "cwe": "CWE-330"
+    }
+  ],
+  "generatedAt": "2026-01-12T12:28:09.366Z"
+}

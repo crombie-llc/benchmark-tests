@@ -1,0 +1,17 @@
+{
+  "caseId": "JS-SEC-XSS-002",
+  "language": "javascript",
+  "expectedFindings": [
+    {
+      "type": "security",
+      "severity": "high",
+      "location": {
+        "file": "public/js/search.js",
+        "startLine": 1
+      },
+      "description": "Cross-Site Scripting through innerHTML",
+      "cwe": "CWE-79"
+    }
+  ],
+  "generatedAt": "2026-01-12T12:28:09.367Z"
+}

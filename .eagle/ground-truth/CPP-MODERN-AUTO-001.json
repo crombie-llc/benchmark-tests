@@ -1,0 +1,17 @@
+{
+  "caseId": "CPP-MODERN-AUTO-001",
+  "language": "cpp",
+  "expectedFindings": [
+    {
+      "type": "code_smell",
+      "severity": "low",
+      "location": {
+        "file": "src/utils/Math.cpp",
+        "startLine": 1
+      },
+      "description": "Verbose iterator syntax. Use range-based for loop or 'auto' for better readability.",
+      "cwe": "CWE-Unknown"
+    }
+  ],
+  "generatedAt": "2026-01-12T12:28:09.361Z"
+}

@@ -1,0 +1,17 @@
+{
+  "caseId": "JS-SEC-CMD-001",
+  "language": "javascript",
+  "expectedFindings": [
+    {
+      "type": "security",
+      "severity": "critical",
+      "location": {
+        "file": "lib/backup.js",
+        "startLine": 1
+      },
+      "description": "OS Command Injection through unsanitized input",
+      "cwe": "CWE-78"
+    }
+  ],
+  "generatedAt": "2026-01-12T12:28:09.363Z"
+}

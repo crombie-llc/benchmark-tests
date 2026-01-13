@@ -1,0 +1,17 @@
+{
+  "caseId": "PY-SEC-SQLI-001",
+  "language": "python",
+  "expectedFindings": [
+    {
+      "type": "security",
+      "severity": "critical",
+      "location": {
+        "file": "app/routes.py",
+        "startLine": 1
+      },
+      "description": "SQL Injection vulnerability detected. User input is directly concatenated into the query string using f-string interpolation.",
+      "cwe": "CWE-89"
+    }
+  ],
+  "generatedAt": "2026-01-12T12:28:09.369Z"
+}

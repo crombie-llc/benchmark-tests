@@ -1,0 +1,17 @@
+{
+  "caseId": "JS-SEC-SQLI-001",
+  "language": "javascript",
+  "expectedFindings": [
+    {
+      "type": "security",
+      "severity": "high",
+      "location": {
+        "file": "routes/api/users.js",
+        "startLine": 1
+      },
+      "description": "SQL Injection vulnerability through string concatenation",
+      "cwe": "CWE-89"
+    }
+  ],
+  "generatedAt": "2026-01-12T12:28:09.367Z"
+}

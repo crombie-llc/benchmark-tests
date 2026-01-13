@@ -1,0 +1,17 @@
+{
+  "caseId": "TS-REACT-HOOK-001",
+  "language": "typescript",
+  "expectedFindings": [
+    {
+      "type": "bug",
+      "severity": "medium",
+      "location": {
+        "file": "src/components/UserProfile.tsx",
+        "startLine": 1
+      },
+      "description": "React Hook useEffect has a missing dependency: 'userId'. This may cause stale data.",
+      "cwe": "CWE-Unknown"
+    }
+  ],
+  "generatedAt": "2026-01-12T12:28:09.373Z"
+}
