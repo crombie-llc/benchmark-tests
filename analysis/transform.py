@@ -1,0 +1,1 @@
+ids = [item['id'] for item in items if item.get('active')]
