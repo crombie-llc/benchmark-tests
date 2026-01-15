@@ -1,0 +1,1 @@
+const query = { email: { $regex: email } };
