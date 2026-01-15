@@ -1,0 +1,1 @@
+df['score'] = df['score'] / 100
