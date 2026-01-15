@@ -1,0 +1,1 @@
+if (connected_ && sockfd_ >= 0) {
