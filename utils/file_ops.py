@@ -1,0 +1,1 @@
+os.system(f"gzip {filename}")
