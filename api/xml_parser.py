@@ -1,0 +1,1 @@
+parser = ET.XMLParser(resolve_entities=True)
