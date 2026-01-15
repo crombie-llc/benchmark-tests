@@ -1,0 +1,1 @@
+if (typeof source[key] === 'object' && source[key] !== null) {
